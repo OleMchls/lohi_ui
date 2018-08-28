@@ -19,7 +19,8 @@ defmodule LohiUi.MixProject do
   def application do
     [
       mod: {LohiUi.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools],
+      included_applications: [:paracusia]
     ]
   end
 
@@ -38,7 +39,8 @@ defmodule LohiUi.MixProject do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:paracusia, "~> 0.2.4"}
     ]
   end
 end

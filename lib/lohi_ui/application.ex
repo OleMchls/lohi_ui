@@ -14,6 +14,10 @@ defmodule LohiUi.Application do
       # {LohiUi.Worker, arg},
     ]
 
+    # unblock paracusia application start - to continue lohi app
+    # boot order (which boots paracusia before mpd)
+    spawn(Application, :start, [:paracusia])
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: LohiUi.Supervisor]
