@@ -21,6 +21,18 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :paracusia,
+  hostname: "127.0.0.1",
+  port: 6697,
+  # if connecting to MPD failed, try again after x milliseconds
+  retry_after: 2000,
+  # Give up if no connection could be established after x attempts.
+  max_retry_attempts: 20
+
+config :lohi_ui,
+  music_directory: "/Users/ole/.mpd/music",
+  playlist_directory: "/Users/ole/.mpd/playlists"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
