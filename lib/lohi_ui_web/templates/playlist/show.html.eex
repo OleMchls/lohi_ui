@@ -1,0 +1,13 @@
+<h1>Show Playlist</h1>
+
+<ul>
+
+  <li>
+    <strong>Tag:</strong>
+    <%= @playlist.tag %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.playlist_path(@conn, :edit, @playlist) %></span>
+<span><%= link "Back", to: Routes.playlist_path(@conn, :index) %></span>

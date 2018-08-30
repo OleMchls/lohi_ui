@@ -3,6 +3,7 @@ defmodule LohiUiWeb.UserSocket do
 
   ## Channels
   # channel "room:*", LohiUiWeb.RoomChannel
+  channel "tags:lobby", LohiUiWeb.TagsChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

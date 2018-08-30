@@ -2,7 +2,7 @@ defmodule LohiUiWeb.Router do
   use LohiUiWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -17,6 +17,13 @@ defmodule LohiUiWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    resources "/playlists", PlaylistController
+  end
+
+  scope "/media", LohiUiWeb do
+    pipe_through :api
+
+    post "/", PlaylistController, :upload
   end
 
   # Other scopes may use custom stacks.

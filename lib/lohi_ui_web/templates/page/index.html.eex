@@ -1,9 +1,9 @@
 <section class="jumbotron text-center">
   <div class="container">
-    <h1 class="jumbotron-heading">Album example</h1>
+    <h1 class="jumbotron-heading">Lohi Box Parental Controls</h1>
     <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
     <p>
-      <a href="#" class="btn btn-primary my-2">Upload new Album</a>
+      <%= link "Upload new Album", to: Routes.playlist_path(@conn, :new), class: "btn btn-primary" %>
     </p>
     <p>
       <a href="#" class="btn btn-secondary my-2">Play</a>
@@ -15,20 +15,23 @@
 <div class="album py-5 bg-light">
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+      <%= for playlist <- @playlists do %>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title"><%= playlist.tag %></h5>
+                  <p class="card-text"></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <%= button "Edit", to: Routes.playlist_path(@conn, :edit, playlist), class: "btn btn-sm btn-outline-secondary" %>
+                      <%= button "Delete", to: Routes.playlist_path(@conn, :delete, playlist), class: "btn btn-sm btn-outline-secondary", method: :delete, data: [confirm: "Are you sure?"] %>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
                 </div>
-                <small class="text-muted">9 mins</small>
               </div>
             </div>
-          </div>
-        </div>
+      <% end %>
       </div>
     </div>
   </div>

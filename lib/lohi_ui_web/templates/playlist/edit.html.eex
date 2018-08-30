@@ -1,0 +1,5 @@
+<h1>Edit Playlist</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.playlist_path(@conn, :update, @playlist)) %>
+
+<span><%= link "Back", to: Routes.playlist_path(@conn, :index) %></span>

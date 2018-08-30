@@ -27,7 +27,8 @@ defmodule LohiUiWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Phoenix.json_library()
+    json_decoder: Phoenix.json_library(),
+    length: 262_144_000 #250 MB
 
   plug Plug.MethodOverride
   plug Plug.Head
