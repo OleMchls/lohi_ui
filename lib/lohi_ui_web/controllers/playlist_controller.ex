@@ -4,8 +4,6 @@ defmodule LohiUiWeb.PlaylistController do
   alias LohiUi.Admin
   alias LohiUi.Admin.Playlist
 
-  @music_path Application.get_env(:lohi_ui, :music_directory)
-
   def new(conn, _params) do
     render(conn, "new.html")
   end
@@ -25,7 +23,8 @@ defmodule LohiUiWeb.PlaylistController do
   end
 
   def upload(conn, %{"file" => %Plug.Upload{} = upload}) do
-    File.copy!(upload.path, "#{@music_path}/#{upload.filename}")
+    music_path = Application.get_env(:lohi_ui, :music_directory)
+    File.copy!(upload.path, "#{music_path}/#{upload.filename}")
     json conn, %{success: true, name: upload.filename}
   end
 
