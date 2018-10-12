@@ -29,6 +29,7 @@ defmodule LohiUiWeb.TagsChannel do
   def handle_in("ctrl", %{"action" => action}, socket) do
     case action do
       "play" -> LohiUi.Controls.play()
+      "skip" -> LohiUi.Controls.skip()
       "vol_up" -> LohiUi.Controls.volume_up()
       "vol_down" -> LohiUi.Controls.volume_down()
     end

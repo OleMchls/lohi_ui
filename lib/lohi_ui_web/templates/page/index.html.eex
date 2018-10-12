@@ -7,6 +7,7 @@
     </p>
     <p>
       <a href="#" id="lohi_ctrl_play" class="btn btn-secondary my-2">Play</a>
+      <a href="#" id="lohi_ctrl_skip" class="btn btn-secondary my-2">Skip</a>
       <a href="#" id="lohi_ctrl_vol_up" class="btn btn-secondary my-2">Volume +</a>
       <a href="#" id="lohi_ctrl_vol_down" class="btn btn-secondary my-2">Volume -</a>
     </p>
