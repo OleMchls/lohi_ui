@@ -66,5 +66,4 @@ document.getElementById('lohi_ctrl_play').onclick = x => { channel.push('ctrl', 
 document.getElementById('lohi_ctrl_vol_up').onclick = x => { channel.push('ctrl', {action: 'vol_up'}); return false }
 document.getElementById('lohi_ctrl_vol_down').onclick = x => { channel.push('ctrl', {action: 'vol_down'}); return false }
 
-
 export default socket
