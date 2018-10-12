@@ -14,6 +14,11 @@ defmodule LohiUi.Controls do
     LohiUi.Player.play()
   end
 
+  def skip do
+    Logger.debug("Controls received SKIP")
+    LohiUi.Player.skip()
+  end
+
   def volume_up do
     Logger.debug("Controls received VOLUME UP")
     LohiUi.Player.volume_up(@step)

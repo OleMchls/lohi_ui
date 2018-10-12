@@ -21,6 +21,10 @@ defmodule LohiUi.Player do
     |> Paracusia.MpdClient.Playback.pause()
   end
 
+  def skip() do
+    Paracusia.MpdClient.Playback.next()
+  end
+
   def volume_up(step) do
     min(Paracusia.PlayerState.status().volume + step, 100)
     |> Paracusia.MpdClient.Playback.set_volume()
