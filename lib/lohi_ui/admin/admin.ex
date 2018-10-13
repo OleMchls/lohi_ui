@@ -14,7 +14,8 @@ defmodule LohiUi.Admin do
 
   """
   def list_playlists do
-    {:ok, playlists} = Paracusia.MpdClient.Playlists.list_all
+    {:ok, playlists} = Paracusia.MpdClient.Playlists.list_all()
+
     playlists
     |> Enum.map &%Playlist{id: &1["playlist"], tag: &1["playlist"]}
   end
@@ -22,20 +23,19 @@ defmodule LohiUi.Admin do
   @doc """
   Gets a single playlist.
 
-  Raises `Ecto.NoResultsError` if the Playlist does not exist.
-
   ## Examples
 
-      iex> get_playlist!(123)
+      iex> get_playlist(123)
       %Playlist{}
 
-      iex> get_playlist!(456)
-      ** (Ecto.NoResultsError)
+      iex> get_playlist(456)
+      nil
 
   """
-  def get_playlist!(id) do
-     # Repo.get!(Playlist, id)
-   end
+  def get_playlist(id) do
+    list_playlists
+    |> Enum.find(&(&1.id == id))
+  end
 
   @doc """
   Creates a playlist.
@@ -46,7 +46,7 @@ defmodule LohiUi.Admin do
   end
 
   def rescan do
-    Paracusia.MpdClient.Database.rescan
+    Paracusia.MpdClient.Database.rescan()
   end
 
   @doc """
@@ -80,7 +80,7 @@ defmodule LohiUi.Admin do
 
   """
   def delete_playlist(%Playlist{} = playlist) do
-    # Repo.delete(playlist)
+    Paracusia.MpdClient.Playlists.remove(playlist.id)
   end
 
   @doc """

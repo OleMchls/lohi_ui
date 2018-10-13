@@ -11,10 +11,12 @@ defmodule LohiUiWeb.PlaylistController do
   def create(conn, %{"tag" => tag, "files" => files}) do
     case Admin.create_playlist(tag, files) do
       :ok ->
-        Admin.rescan
+        Admin.rescan()
+
         conn
         |> put_flash(:info, "Playlist created successfully.")
         |> redirect(to: Routes.page_path(conn, :index))
+
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
@@ -25,7 +27,7 @@ defmodule LohiUiWeb.PlaylistController do
   def upload(conn, %{"file" => %Plug.Upload{} = upload}) do
     music_path = Application.get_env(:lohi_ui, :music_directory)
     File.copy!(upload.path, "#{music_path}/#{upload.filename}")
-    json conn, %{success: true, name: upload.filename}
+    json(conn, %{success: true, name: upload.filename})
   end
 
   def show(conn, %{"id" => id}) do
@@ -53,11 +55,12 @@ defmodule LohiUiWeb.PlaylistController do
   end
 
   def delete(conn, %{"id" => id}) do
-    # playlist = Admin.get_playlist!(id)
-    # {:ok, _playlist} = Admin.delete_playlist(playlist)
-    #
-    # conn
-    # |> put_flash(:info, "Playlist deleted successfully.")
-    # |> redirect(to: Routes.playlist_path(conn, :index))
+    :ok =
+      Admin.get_playlist(id)
+      |> Admin.delete_playlist()
+
+    conn
+    |> put_flash(:info, "Playlist deleted successfully.")
+    |> redirect(to: Routes.page_path(conn, :index))
   end
 end
