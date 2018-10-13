@@ -17,7 +17,11 @@ defmodule LohiUi.Admin do
     {:ok, playlists} = Paracusia.MpdClient.Playlists.list_all()
 
     playlists
-    |> Enum.map &%Playlist{id: &1["playlist"], tag: &1["playlist"]}
+    |> Enum.map(&%Playlist{id: &1["playlist"], tag: &1["playlist"]})
+    |> Enum.map(fn playlist ->
+      {:ok, songs} = Paracusia.MpdClient.Playlists.list_info(playlist.id)
+      %{playlist | songs: songs}
+    end)
   end
 
   @doc """
