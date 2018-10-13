@@ -1,7 +1,7 @@
 <section class="jumbotron text-center">
   <div class="container">
-    <h1 class="jumbotron-heading">Lohi Box Parental Controls</h1>
-    <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+    <h1 class="jumbotron-heading">Loonie Box Parental Controls</h1>
+    <p class="lead text-muted">Nein, es ist nicht leicht, Kind zu sein! Es ist schwer, ungeheuer schwer. Was bedeutet es denn - Kind zu sein. Es bedeutet, dass man ins Bett gehen, aufstehen, sich anziehen, essen, Zähne und Nase putzen muss, wenn es den Großen passt, nicht wenn man selbst es möchte. – Astrid Lindgren
     <p>
       <%= link "Upload new Album", to: Routes.playlist_path(@conn, :new), class: "btn btn-primary" %>
     </p>
@@ -22,7 +22,7 @@
                 <div class="card-body">
                   <h5 class="card-title"><%= playlist.tag %></h5>
                   <p class="card-text">
-                    <ul class="list-group">
+                    <ul class="list-group list-group-flush">
                       <%= for song <- playlist.songs do %>
                       <li class="list-group-item d-flex justify-content-between align-items-center">
                         <%= song.title %>
