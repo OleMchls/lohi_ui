@@ -3,6 +3,7 @@ defmodule LohiUi.Admin do
   The Admin context.
   """
   alias LohiUi.Admin.Playlist
+  alias LohiUi.Admin.Song
 
   @doc """
   Returns the list of playlists.
@@ -20,10 +21,23 @@ defmodule LohiUi.Admin do
     |> Enum.map(&%Playlist{id: &1["playlist"], tag: &1["playlist"]})
     |> Enum.map(fn playlist ->
       {:ok, songs} = Paracusia.MpdClient.Playlists.list_info(playlist.id)
-      %{playlist | songs: songs}
+
+      %{
+        playlist
+        | songs:
+            Enum.map(
+              songs,
+              &%Song{
+                title: &1["Title"],
+                file: &1["file"],
+                duration: &1["Time"],
+                playcount: LohiUi.Player.playcount(&1["file"])
+              }
+            )
+      }
     end)
     |> Enum.map(fn playlist ->
-      %{playlist | duration: Enum.reduce(playlist.songs, 0, &(String.to_integer(&1["Time"]) + &2))}
+      %{playlist | duration: Enum.reduce(playlist.songs, 0, &(String.to_integer(&1.duration) + &2))}
     end)
   end
 
