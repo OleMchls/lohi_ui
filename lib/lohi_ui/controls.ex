@@ -1,7 +1,7 @@
 require Logger
 
 defmodule LohiUi.Controls do
-  @step 15
+  @step 5
 
   def tag(uuid) do
     Logger.debug("Controls received TAG #{uuid}")
