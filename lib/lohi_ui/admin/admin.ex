@@ -45,8 +45,7 @@ defmodule LohiUi.Admin do
   Creates a playlist.
   """
   def create_playlist(tag, files) do
-    playlist_path = Application.get_env(:lohi_ui, :playlist_directory)
-    File.write(IO.inspect("#{playlist_path}/#{tag}.m3u"), Enum.join(files, "\n"))
+    Enum.each(files, &Paracusia.MpdClient.Playlists.add(tag, &1))
   end
 
   def rescan do
