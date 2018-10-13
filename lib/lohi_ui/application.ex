@@ -10,6 +10,7 @@ defmodule LohiUi.Application do
     children = [
       # Start the endpoint when the application starts
       LohiUiWeb.Endpoint,
+      LohiUi.Player,
       LohiUi.MpdMonitor
       # Starts a worker by calling: LohiUi.Worker.start_link(arg)
       # {LohiUi.Worker, arg},

@@ -38,6 +38,6 @@ defmodule LohiUi.MpdMonitor do
   defp check(pid) do
     # start monitoring recheck on down
     _monitor = Process.monitor(pid)
-    LohiUi.Player.init()
+    LohiUi.Player.init_player()
   end
 end
