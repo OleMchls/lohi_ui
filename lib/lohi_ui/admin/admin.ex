@@ -47,6 +47,9 @@ defmodule LohiUi.Admin do
   @doc """
   Creates a playlist.
   """
+  def create_playlist("", files), do: {:error, "No RFID Tag found"}
+  def create_playlist(_, []), do: {:error, "No files uploaded"}
+
   def create_playlist(tag, files) do
     Enum.each(files, &Paracusia.MpdClient.Playlists.add(tag, &1))
   end

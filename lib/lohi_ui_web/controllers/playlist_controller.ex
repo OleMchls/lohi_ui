@@ -20,7 +20,7 @@ defmodule LohiUiWeb.PlaylistController do
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.playlist_path(conn, :new))
     end
   end
 
