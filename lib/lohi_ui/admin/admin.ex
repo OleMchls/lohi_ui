@@ -22,6 +22,9 @@ defmodule LohiUi.Admin do
       {:ok, songs} = Paracusia.MpdClient.Playlists.list_info(playlist.id)
       %{playlist | songs: songs}
     end)
+    |> Enum.map(fn playlist ->
+      %{playlist | duration: Enum.reduce(playlist.songs, 0, &(String.to_integer(&1["Time"]) + &2))}
+    end)
   end
 
   @doc """
