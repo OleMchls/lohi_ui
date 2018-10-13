@@ -14,7 +14,7 @@
           <%= multiple_select f, :files, [], class: "form-control", readonly: true, id: "lohi_upload_files" %>
         </div>
         <%= submit "Create", class: "btn btn-primary" %>
-        <%= button "Back", to: Routes.page_path(@conn, :index), class: "btn btn-secondary" %>
+        <%= link "Back", to: Routes.page_path(@conn, :index), class: "btn btn-secondary" %>
       <% end %>
       </div>
   </div>
