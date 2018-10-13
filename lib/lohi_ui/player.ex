@@ -1,7 +1,7 @@
 defmodule LohiUi.Player do
   use GenServer
 
-  @initial_volume 20
+  @initial_volume 60
   @playcount_key "loonie-pc"
 
   def start_link(_opts) do
