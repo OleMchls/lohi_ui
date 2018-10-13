@@ -33,7 +33,7 @@
                   </p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <%= button "Edit", to: Routes.playlist_path(@conn, :edit, playlist), class: "btn btn-sm btn-outline-secondary" %>
+                      <!-- <%= button "Edit", to: Routes.playlist_path(@conn, :edit, playlist), class: "btn btn-sm btn-outline-secondary" %> -->
                       <%= button "Delete", to: Routes.playlist_path(@conn, :delete, playlist), class: "btn btn-sm btn-outline-secondary", method: :delete, data: [confirm: "Are you sure?"] %>
                     </div>
                     <small class="text-muted"><%= round(playlist.duration / 60) %> mins</small>
