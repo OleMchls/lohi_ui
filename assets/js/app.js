@@ -20,6 +20,7 @@ import 'phoenix_html'
 // import socket from "./socket"
 
 import socket from "./socket"
+import "./uploader"
 
 Dropzone.options.albumDropzone = {
   init: function () {
