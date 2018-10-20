@@ -2,6 +2,7 @@ defmodule LohiUi.Player do
   use GenServer
 
   @initial_volume 60
+  @max_volume 100
   @playcount_key "loonie-pc"
 
   def start_link(_opts) do
@@ -13,10 +14,16 @@ defmodule LohiUi.Player do
   end
 
   def play(uuid) do
-    Paracusia.MpdClient.Playback.stop()
-    Paracusia.MpdClient.Queue.clear()
-    Paracusia.MpdClient.Playlists.load("#{uuid}")
-    Paracusia.MpdClient.Playback.play()
+    case Paracusia.MpdClient.Playlists.list("#{uuid}") do
+      {:ok, _} ->
+        Paracusia.MpdClient.Playback.stop()
+        Paracusia.MpdClient.Queue.clear()
+        Paracusia.MpdClient.Playlists.load("#{uuid}")
+        Paracusia.MpdClient.Playback.play()
+
+      {:error, _} ->
+        :ok
+    end
   end
 
   def play() do
@@ -29,7 +36,7 @@ defmodule LohiUi.Player do
   end
 
   def volume_up(step) do
-    min(Paracusia.PlayerState.status().volume + step, 100)
+    min(Paracusia.PlayerState.status().volume + step, @max_volume)
     |> Paracusia.MpdClient.Playback.set_volume()
   end
 
