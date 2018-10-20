@@ -65,7 +65,10 @@ defmodule LohiUi.Admin do
   def create_playlist(_, []), do: {:error, "No files uploaded"}
 
   def create_playlist(tag, files) do
-    Enum.each(files, &Paracusia.MpdClient.Playlists.add(tag, &1))
+    Enum.each(files, fn file ->
+      Paracusia.MpdClient.Playlists.add(tag, file)
+      |> IO.inspect(label: file)
+    end)
   end
 
   def rescan do

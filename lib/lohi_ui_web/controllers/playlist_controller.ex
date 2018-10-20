@@ -11,8 +11,6 @@ defmodule LohiUiWeb.PlaylistController do
   def create(conn, %{"tag" => tag, "files" => files}) do
     case Admin.create_playlist(tag, files) do
       :ok ->
-        Admin.rescan()
-
         conn
         |> put_flash(:info, "Playlist created successfully.")
         |> redirect(to: Routes.page_path(conn, :index))
