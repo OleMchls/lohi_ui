@@ -9,6 +9,8 @@ defmodule LohiUiWeb.PlaylistController do
   end
 
   def create(conn, %{"tag" => tag, "files" => files}) do
+    LohiUi.Admin.rescan()
+
     case Admin.create_playlist(tag, files) do
       :ok ->
         conn
