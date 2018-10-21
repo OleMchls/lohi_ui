@@ -9,8 +9,6 @@ defmodule LohiUiWeb.PlaylistController do
   end
 
   def create(conn, %{"tag" => tag, "files" => files}) do
-    LohiUi.Admin.rescan()
-
     case Admin.create_playlist(tag, files) do
       :ok ->
         conn
@@ -27,6 +25,7 @@ defmodule LohiUiWeb.PlaylistController do
   def upload(conn, %{"file" => %Plug.Upload{} = upload}) do
     music_path = Application.get_env(:lohi_ui, :music_directory)
     File.copy!(upload.path, "#{music_path}/#{upload.filename}")
+    LohiUi.Admin.rescan()
     json(conn, %{success: true, name: upload.filename})
   end
 
