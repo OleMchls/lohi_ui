@@ -26,7 +26,12 @@ defmodule LohiUiWeb.PlaylistController do
     music_path = Application.get_env(:lohi_ui, :music_directory)
     File.copy!(upload.path, "#{music_path}/#{upload.filename}")
     LohiUi.Admin.rescan()
-    json(conn, %{success: true, name: upload.filename})
+
+    json(conn, %{
+      success: true,
+      uuid: UUID.uuid4(),
+      name: upload.filename
+    })
   end
 
   def show(conn, %{"id" => id}) do

@@ -1,30 +1,5 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <h1>New Album</h1>
-
-      <%= form_for @conn, Routes.playlist_path(@conn, :create), fn f -> %>
-        <div class="form-group">
-          <label for="tag">RFID Tag</label>
-          <%= text_input f, :tag, id: "lohi_upload_id", class: "form-control-lg form-control-plaintext", readonly: true, value: "" %>
-          <small id="emailHelp" class="form-text text-muted">Hold a RFID tag close the the RFID reader.</small>
-        </div>
-        <div class="form-group">
-          <label for="lohi_upload_files">Files in playlist</label>
-          <%= multiple_select f, :files, [], class: "form-control", readonly: true, id: "lohi_upload_files" %>
-        </div>
-        <%= submit "Create", class: "btn btn-primary" %>
-        <%= link "Back", to: Routes.page_path(@conn, :index), class: "btn btn-secondary" %>
-      <% end %>
-      </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p>
-        <form action="/media" class="dropzone mx-auto" id="album-dropzone"></form>
-      </p>
-   </div>
+      <div class='col-md-12' id="upload"></div>
   </div>
 </div>
-
-<div id="upload"></div>

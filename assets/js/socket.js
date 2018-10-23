@@ -60,12 +60,10 @@ channel.join()
   .receive('ok', resp => { console.log('Joined successfully', resp) })
   .receive('error', resp => { console.log('Unable to join', resp) })
 
-channel.on('tag', resp => { document.getElementById('lohi_upload_id').value = resp.tag })
-
 var btn
 if (btn = document.getElementById('lohi_ctrl_play')) { btn.onclick = x => { channel.push('ctrl', { action: 'play' }); return false } }
 if (btn = document.getElementById('lohi_ctrl_skip')) { btn.onclick = x => { channel.push('ctrl', { action: 'skip' }); return false } }
 if (btn = document.getElementById('lohi_ctrl_vol_up')) { btn.onclick = x => { channel.push('ctrl', { action: 'vol_up' }); return false } }
 if (btn = document.getElementById('lohi_ctrl_vol_down')) { btn.onclick = x => { channel.push('ctrl', { action: 'vol_down' }); return false } }
 
-export default socket
+export default channel

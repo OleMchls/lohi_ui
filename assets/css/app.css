@@ -9,8 +9,7 @@
     border: 2px dashed rgb(0, 135, 247);
     border-image: none;
     height: 300px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto;
 }
 
 .dz-preview {

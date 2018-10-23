@@ -19,8 +19,10 @@ import 'phoenix_html'
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 
-import socket from "./socket"
-import "./uploader"
+import channel from './socket'
+import uploader from './uploader'
+
+channel.on('tag', resp => { uploader.tag(resp.tag) })
 
 Dropzone.options.albumDropzone = {
   init: function () {
