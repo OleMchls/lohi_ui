@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+library.add(fas)
 
 const FilesTable = ({ files, onMove, onRemove }) => {
   if (!files.length) return null
@@ -21,6 +25,7 @@ const FilesTable = ({ files, onMove, onRemove }) => {
             <td>
               {idx !== 0 && (
                 <button
+                  title={`move ${file.name} up`}
                   type="button"
                   className="btn btn-link"
                   onClick={() => onMove(idx, idx - 1)}
@@ -30,6 +35,7 @@ const FilesTable = ({ files, onMove, onRemove }) => {
               )}
               {idx !== files.length - 1 && (
                 <button
+                  title={`move ${file.name} down`}
                   type="button"
                   className="btn btn-link"
                   onClick={() => onMove(idx, idx + 1)}
@@ -38,6 +44,7 @@ const FilesTable = ({ files, onMove, onRemove }) => {
                 </button>
               )}
               <button
+                title={`remove ${file.name}`}
                 type="button"
                 className="btn btn-link"
                 onClick={() => onRemove(file)}

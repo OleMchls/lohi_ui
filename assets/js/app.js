@@ -7,8 +7,6 @@ import 'bootstrap'
 import Dropzone from 'dropzone'
 import ReactDOM from 'react-dom'
 import React from 'react'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -39,8 +37,6 @@ Dropzone.options.albumDropzone = {
     })
   }
 }
-
-library.add(fas)
 
 ReactDOM.render(
   <Uploader channel={channel} />,
