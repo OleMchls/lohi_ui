@@ -6,9 +6,9 @@
 //
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
-import {Socket} from "phoenix"
+import { Socket } from 'phoenix'
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket('/socket', { params: { token: window.userToken } })
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -56,14 +56,39 @@ socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel('tags:lobby', {})
-channel.join()
-  .receive('ok', resp => { console.log('Joined successfully', resp) })
-  .receive('error', resp => { console.log('Unable to join', resp) })
+channel
+  .join()
+  .receive('ok', resp => {
+    console.log('Joined successfully', resp)
+  })
+  .receive('error', resp => {
+    console.log('Unable to join', resp)
+  })
 
 var btn
-if (btn = document.getElementById('lohi_ctrl_play')) { btn.onclick = x => { channel.push('ctrl', { action: 'play' }); return false } }
-if (btn = document.getElementById('lohi_ctrl_skip')) { btn.onclick = x => { channel.push('ctrl', { action: 'skip' }); return false } }
-if (btn = document.getElementById('lohi_ctrl_vol_up')) { btn.onclick = x => { channel.push('ctrl', { action: 'vol_up' }); return false } }
-if (btn = document.getElementById('lohi_ctrl_vol_down')) { btn.onclick = x => { channel.push('ctrl', { action: 'vol_down' }); return false } }
+if ((btn = document.getElementById('lohi_ctrl_play'))) {
+  btn.onclick = x => {
+    channel.push('ctrl', { action: 'play' })
+    return false
+  }
+}
+if ((btn = document.getElementById('lohi_ctrl_skip'))) {
+  btn.onclick = x => {
+    channel.push('ctrl', { action: 'skip' })
+    return false
+  }
+}
+if ((btn = document.getElementById('lohi_ctrl_vol_up'))) {
+  btn.onclick = x => {
+    channel.push('ctrl', { action: 'vol_up' })
+    return false
+  }
+}
+if ((btn = document.getElementById('lohi_ctrl_vol_down'))) {
+  btn.onclick = x => {
+    channel.push('ctrl', { action: 'vol_down' })
+    return false
+  }
+}
 
 export default channel

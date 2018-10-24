@@ -15,7 +15,13 @@ defmodule LohiUi.Admin do
 
   """
   def list_playlists do
-    {:ok, playlists} = Paracusia.MpdClient.Playlists.list_all()
+
+    # Let it "run" without any MPD client available
+    {:ok, playlists} = try do
+      Paracusia.MpdClient.Playlists.list_all()
+    rescue
+      _ -> {:ok, []}
+    end
 
     playlists
     |> Enum.map(&%Playlist{id: &1["playlist"], tag: &1["playlist"]})
