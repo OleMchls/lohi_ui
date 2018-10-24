@@ -5,6 +5,8 @@ import css from '../css/app.css'
 
 import 'bootstrap'
 import Dropzone from 'dropzone'
+import ReactDOM from 'react-dom'
+import React from 'react'
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -20,15 +22,23 @@ import 'phoenix_html'
 // import socket from "./socket"
 
 import channel from './socket'
-import uploader from './uploader'
-
-channel.on('tag', resp => { uploader.tag(resp.tag) })
+import Uploader from './Uploader'
 
 Dropzone.options.albumDropzone = {
-  init: function () {
-    this.on('success', function (file, response) {
+  init: function() {
+    this.on('success', function(file, response) {
       let fileSelect = document.getElementById('lohi_upload_files')
-      fileSelect.options[fileSelect.options.length] = new Option(response.name, response.name, false, true)
+      fileSelect.options[fileSelect.options.length] = new Option(
+        response.name,
+        response.name,
+        false,
+        true
+      )
     })
   }
 }
+
+ReactDOM.render(
+  <Uploader channel={channel} />,
+  document.getElementById('upload')
+)
