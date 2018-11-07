@@ -40,6 +40,7 @@ defmodule LohiUi.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:cowboy, "~> 1.0"},
+      {:plug_cowboy, "~> 1.0"},
       {:paracusia, "~> 0.2.4"},
       {:uuid, "~> 1.1"}
     ]
