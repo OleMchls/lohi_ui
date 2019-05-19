@@ -30,7 +30,8 @@ defmodule LohiUi.Admin do
               &%Song{
                 title: &1["Title"],
                 file: &1["file"],
-                duration: &1["Time"],
+                # TODO: convert duration to integer here
+                duration: &1["Time"] || "0",
                 playcount: LohiUi.Player.playcount(&1["file"])
               }
             )
