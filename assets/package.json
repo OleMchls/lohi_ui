@@ -20,6 +20,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-dropzone": "^6.2.4",
+    "sort-by": "^1.2.0",
     "superagent": "^4.0.0-beta.5"
   },
   "devDependencies": {

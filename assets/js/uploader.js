@@ -6,6 +6,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import superagent from 'superagent'
 import arrayMove from 'array-move'
+import sortBy from 'sort-by'
 
 library.add(fas)
 
@@ -49,6 +50,12 @@ class Uploader extends Component {
   remove (item) {
     this.setState(prevState => ({
       files: prevState.files.filter(x => x !== item)
+    }))
+  }
+
+  sort () {
+    this.setState(prevState => ({
+      files: prevState.files.sort(sortBy("name"))
     }))
   }
 
@@ -116,10 +123,11 @@ class Uploader extends Component {
           <p>Try dropping some files here, or click to select files to upload.</p>
         </Dropzone>
 
-        <p>
+        <div>
+          <button type='button' className='btn btn-outline-secondary btn-lg' onClick={() => this.sort()}>Sort</button>
           <button type='button' className='btn btn-primary btn-lg' onClick={() => this.save()}>Save</button>
           <button type='button' className='btn btn-default btn-lg' onClick={() => this.back()}>Back</button>
-        </p>
+        </div>
       </div>
     )
   }
