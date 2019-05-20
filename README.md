@@ -17,3 +17,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+## Deploying assets with lohi
+
+First, build the assets in the `assets` folder: `npm run deploy`
+Next, generate assets digests from project root: `mix phx.digest`
