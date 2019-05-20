@@ -9,9 +9,7 @@ defmodule LohiUiWeb.Endpoint do
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
-  plug Plug.Static,
-    at: "/", from: :lohi_ui, gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+  plug Plug.Static, at: "/", from: :lohi_ui, gzip: false, only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -25,10 +23,15 @@ defmodule LohiUiWeb.Endpoint do
   plug Plug.Logger
 
   plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
+    parsers: [
+      :urlencoded,
+      {:multipart, read_timeout: 15_000 * 4},
+      :json
+    ],
     pass: ["*/*"],
     json_decoder: Phoenix.json_library(),
-    length: 262_144_000 #250 MB
+    # 250 MB
+    length: 262_144_000
 
   plug Plug.MethodOverride
   plug Plug.Head
