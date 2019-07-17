@@ -11,9 +11,10 @@ defmodule LohiUi.Application do
       # Start the endpoint when the application starts
       LohiUiWeb.Endpoint,
       LohiUi.Player,
-      LohiUi.MpdMonitor
+      LohiUi.MpdMonitor,
       # Starts a worker by calling: LohiUi.Worker.start_link(arg)
       # {LohiUi.Worker, arg},
+      {Cluster.Supervisor, [Application.get_env(:libcluster, :topologies), [name: LohiUi.ClusterSupervisor]]}
     ]
 
     # unblock paracusia application start - to continue lohi app

@@ -2,7 +2,6 @@ defmodule LohiUi.Player do
   use GenServer
 
   @initial_volume 60
-  @max_volume 100
   @playcount_key "loonie-pc"
 
   def start_link(_opts) do
@@ -36,7 +35,7 @@ defmodule LohiUi.Player do
   end
 
   def volume_up(step) do
-    min(Paracusia.PlayerState.status().volume + step, @max_volume)
+    min(Paracusia.PlayerState.status().volume + step, max_volume)
     |> Paracusia.MpdClient.Playback.set_volume()
   end
 
@@ -83,4 +82,6 @@ defmodule LohiUi.Player do
   def handle_info({:paracusia, event}, state) do
     {:noreply, state}
   end
+
+  defp max_volume, do: Application.get_env(:lohi_ui, :max_volume, 100)
 end

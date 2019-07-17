@@ -20,7 +20,7 @@ defmodule LohiUi.MixProject do
     [
       mod: {LohiUi.Application, []},
       extra_applications: [:logger, :runtime_tools],
-      included_applications: [:paracusia]
+      included_applications: [:paracusia, :libcluster, :inets, :tftp]
     ]
   end
 
@@ -33,15 +33,16 @@ defmodule LohiUi.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, github: "phoenixframework/phoenix", override: true},
-      {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:cowboy, "~> 1.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:cowboy, "~> 1.0"},
-      {:plug_cowboy, "~> 1.0"},
+      {:libcluster, "~> 3.1"},
       {:paracusia, "~> 0.2.4"},
+      {:phoenix_html, "~> 2.11"},
+      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix, github: "phoenixframework/phoenix", override: true},
+      {:plug_cowboy, "~> 1.0"},
       {:uuid, "~> 1.1"}
     ]
   end
