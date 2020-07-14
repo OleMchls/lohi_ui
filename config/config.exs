@@ -10,7 +10,7 @@ config :lohi_ui, LohiUiWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "6OwWB9eToPRsuRnviepHudRwtc6z4AZ89iqTqiISMQQWtf0hLQxJOpgZMCGTMkka",
   render_errors: [view: LohiUiWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: LohiUi.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: LohiUi.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

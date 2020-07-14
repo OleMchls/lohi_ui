@@ -9,6 +9,7 @@ defmodule LohiUi.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
+      {Phoenix.PubSub, [name: LohiUi.PubSub, adapter: Phoenix.PubSub.PG2]},
       LohiUiWeb.Endpoint,
       LohiUi.Player,
       LohiUi.MpdMonitor,
