@@ -133,7 +133,5 @@ class Uploader extends Component {
   }
 }
 
-export default ReactDOM.render(
-  <Uploader />,
-  document.getElementById('upload')
-)
+// TODO: Pretty sure this is a dump hack around the idea of only having a component on certain sub-pages
+export default document.getElementById('upload') ? ReactDOM.render(<Uploader />, document.getElementById('upload')) : null

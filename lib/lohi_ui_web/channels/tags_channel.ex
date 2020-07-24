@@ -26,6 +26,12 @@ defmodule LohiUiWeb.TagsChannel do
     {:noreply, socket}
   end
 
+  def handle_in("ctrl", %{"action" => "tag", "tag" => uuid}, socket) do
+    LohiUi.Controls.tag(uuid)
+
+    {:noreply, socket}
+  end
+
   def handle_in("ctrl", %{"action" => action}, socket) do
     case action do
       "play" -> LohiUi.Controls.play()
