@@ -67,7 +67,7 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 config :libcluster,
-  debug: true,
+  debug: false,
   topologies: [
     lohi: [
       strategy: Elixir.Cluster.Strategy.Gossip,
