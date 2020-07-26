@@ -64,6 +64,16 @@ defmodule LohiUi.Player do
     {:reply, :ok, apply(mod, fun, args)}
   end
 
+  def handle_cast({:update, {_action, %Paracusia.PlayerState{} = player_state}}, state) do
+    LohiUiWeb.TagsChannel.broadcast_player_state(player_state)
+
+    {:noreply, state}
+  end
+
+  def handle_cast({:update, _}, state) do
+    {:noreply, state}
+  end
+
   def handle_info(
         {:paracusia,
          {:player_changed,
@@ -75,13 +85,16 @@ defmodule LohiUi.Player do
       )
       when elapsed != 0 do
     Paracusia.MpdClient.Stickers.set(file, @playcount_key, playcount(file) + 1)
+    GenServer.cast(self(), {:update, event})
 
     {:noreply, state}
   end
 
   def handle_info({:paracusia, event}, state) do
+    GenServer.cast(self(), {:update, event})
     {:noreply, state}
   end
 
-  defp max_volume, do: Application.get_env(:lohi_ui, :max_volume, 100)
+  def max_volume(max), do: Application.set_env(:lohi_ui, :max_volume, 100)
+  def max_volume, do: Application.get_env(:lohi_ui, :max_volume, 100)
 end

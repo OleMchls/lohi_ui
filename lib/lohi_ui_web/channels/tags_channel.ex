@@ -5,6 +5,10 @@ defmodule LohiUiWeb.TagsChannel do
     LohiUiWeb.Endpoint.broadcast!("tags:lobby", "tag", %{tag: uuid})
   end
 
+  def broadcast_player_state(state) do
+    LohiUiWeb.Endpoint.broadcast!("tags:lobby", "player", %{player: state})
+  end
+
   def join("tags:lobby", payload, socket) do
     if authorized?(payload) do
       {:ok, socket}

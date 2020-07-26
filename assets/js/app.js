@@ -21,8 +21,10 @@ import 'phoenix_html'
 
 import channel from './socket'
 import uploader from './uploader'
+import player from './player'
 
 channel.on('tag', resp => { uploader.tag(resp.tag) })
+channel.on('player', resp => { player.update(resp.player) })
 
 Dropzone.options.albumDropzone = {
   init: function () {
