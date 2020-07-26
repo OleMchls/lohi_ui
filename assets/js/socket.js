@@ -60,12 +60,7 @@ channel.join()
   .receive('ok', resp => { console.log('Joined successfully', resp) })
   .receive('error', resp => { console.log('Unable to join', resp) })
 
-var btn
 var btns
-if (btn = document.getElementById('lohi_ctrl_play')) { btn.onclick = x => { channel.push('ctrl', { action: 'play' }); return false } }
-if (btn = document.getElementById('lohi_ctrl_skip')) { btn.onclick = x => { channel.push('ctrl', { action: 'skip' }); return false } }
-if (btn = document.getElementById('lohi_ctrl_vol_up')) { btn.onclick = x => { channel.push('ctrl', { action: 'vol_up' }); return false } }
-if (btn = document.getElementById('lohi_ctrl_vol_down')) { btn.onclick = x => { channel.push('ctrl', { action: 'vol_down' }); return false } }
 if (btns = document.querySelectorAll('.lohi_ctrl_tag')) {
   btns.forEach(function (btn) { btn.onclick = x => { channel.push('ctrl', { action: 'tag', tag: btn.dataset.tag }); return false } })
 }

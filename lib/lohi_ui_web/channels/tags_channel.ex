@@ -36,6 +36,13 @@ defmodule LohiUiWeb.TagsChannel do
     {:noreply, socket}
   end
 
+  def handle_in("ctrl", %{"action" => "max_volume", "max" => max}, socket) do
+    String.to_integer(max)
+    |> LohiUi.Player.max_volume()
+
+    {:noreply, socket}
+  end
+
   def handle_in("ctrl", %{"action" => action}, socket) do
     case action do
       "play" -> LohiUi.Controls.play()

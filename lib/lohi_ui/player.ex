@@ -41,6 +41,7 @@ defmodule LohiUi.Player do
 
   def volume_down(step) do
     max(Paracusia.PlayerState.status().volume - step, 0)
+    |> min(max_volume)
     |> Paracusia.MpdClient.Playback.set_volume()
   end
 
@@ -65,7 +66,7 @@ defmodule LohiUi.Player do
   end
 
   def handle_cast({:update, {_action, %Paracusia.PlayerState{} = player_state}}, state) do
-    LohiUiWeb.TagsChannel.broadcast_player_state(player_state)
+    LohiUiWeb.TagsChannel.broadcast_player_state(Map.put(player_state, :max_volume, max_volume))
 
     {:noreply, state}
   end
@@ -95,6 +96,10 @@ defmodule LohiUi.Player do
     {:noreply, state}
   end
 
-  def max_volume(max), do: Application.set_env(:lohi_ui, :max_volume, 100)
+  def max_volume(max) do
+    Application.put_env(:lohi_ui, :max_volume, max)
+    volume_down(0)
+  end
+
   def max_volume, do: Application.get_env(:lohi_ui, :max_volume, 100)
 end
