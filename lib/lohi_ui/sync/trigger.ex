@@ -7,7 +7,7 @@ defmodule LohiUi.Sync.Trigger do
   @interval 600_000
 
   def start_link(default) do
-    GenServer.start_link(__MODULE__, default)
+    GenServer.start_link(__MODULE__, default, name: __MODULE__)
   end
 
   @impl true

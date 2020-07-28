@@ -26,6 +26,7 @@ defmodule LohiUiWeb.PlaylistController do
     music_path = Application.get_env(:lohi_ui, :music_directory)
     File.copy!(upload.path, "#{music_path}/#{upload.filename}")
     LohiUi.Admin.rescan()
+    LohiUi.Sync.Trigger.trigger()
 
     json(conn, %{
       success: true,
