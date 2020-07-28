@@ -1,6 +1,8 @@
 defmodule LohiUiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :lohi_ui
 
+  use Plug.Debugger
+
   socket "/socket", LohiUiWeb.UserSocket,
     websocket: true,
     longpoll: false
