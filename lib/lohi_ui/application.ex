@@ -19,6 +19,7 @@ defmodule LohiUi.Application do
          music_dir: Application.get_env(:lohi_ui, :music_directory),
          playlist_dir: Application.get_env(:lohi_ui, :playlist_directory)
        ]},
+      LohiUi.Sync.Trigger,
       # Starts a worker by calling: LohiUi.Worker.start_link(arg)
       # {LohiUi.Worker, arg},
       {Cluster.Supervisor, [Application.get_env(:libcluster, :topologies), [name: LohiUi.ClusterSupervisor]]}

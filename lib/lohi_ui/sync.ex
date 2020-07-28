@@ -10,7 +10,7 @@ defmodule LohiUi.Sync do
   end
 
   def sync(node) do
-    GenServer.call(__MODULE__, {:sync, node})
+    GenServer.call(__MODULE__, {:sync, node}, :infinity)
   end
 
   # :tftp.start([port: 19999])
@@ -21,6 +21,13 @@ defmodule LohiUi.Sync do
 
   def songs_missing_from_node(node) do
     diff(all_songs, all_songs(node))
+  end
+
+  def all_playlists, do: GenServer.call(__MODULE__, {:list, :playlist_dir})
+  def all_playlists(node), do: GenServer.call({__MODULE__, node}, {:list, :playlist_dir})
+
+  def playlists_missing_from_node(node) do
+    diff(all_playlists, all_playlists(node))
   end
 
   defp diff(a, b) do
@@ -53,11 +60,17 @@ defmodule LohiUi.Sync do
     [_remote_node_name, remote_host] = Atom.to_string(node) |> String.split("@")
 
     missing_songs = diff(list(state.music_dir), all_songs(node))
+    missing_playlists = diff(list(state.playlist_dir), all_playlists(node))
+    opts = [host: String.to_charlist(remote_host)]
 
-    Enom.map(missing_songs, fn song ->
-      LohiUi.Sync.Tftp.read_file("#{remote_sync.music_dir}/#{song}", "#{state.music_dir}/#{song}", host: remote_host)
+    Enum.map(missing_songs, fn song ->
+      LohiUi.Sync.Tftp.read_file("#{remote_sync.music_dir}/#{song}", "#{state.music_dir}/#{song}", opts)
     end)
 
-    {:reply, {:ok, songs: length(missing_songs)}, state}
+    Enum.map(missing_playlists, fn playlist ->
+      LohiUi.Sync.Tftp.read_file("#{remote_sync.playlist_dir}/#{playlist}", "#{state.playlist_dir}/#{playlist}", opts)
+    end)
+
+    {:reply, {:ok, songs: length(missing_songs), playlists: length(missing_playlists)}, state}
   end
 end
