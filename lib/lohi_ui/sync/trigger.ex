@@ -6,10 +6,18 @@ defmodule LohiUi.Sync.Trigger do
   # 10 minutes
   @interval 600_000
 
+  def start_link(default) do
+    GenServer.start_link(__MODULE__, default)
+  end
+
   @impl true
   def init(opts) do
     schedule_trigger()
     {:ok, opts}
+  end
+
+  def trigger do
+    GenServer.cast(__MODULE__, :trigger)
   end
 
   @impl true
