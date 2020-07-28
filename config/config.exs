@@ -31,7 +31,7 @@ config :paracusia,
 config :lohi_ui,
   music_directory: "/Users/ole/.mpd/music",
   playlist_directory: "/Users/ole/.mpd/playlists",
-  max_volume: 100
+  max_volume: 60
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
