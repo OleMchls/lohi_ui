@@ -8,6 +8,10 @@ defmodule LohiUi.Player do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
+  def init(init_arg) do
+    {:ok, init_arg}
+  end
+
   def init_player() do
     GenServer.call(__MODULE__, :init_player)
   end
@@ -36,13 +40,13 @@ defmodule LohiUi.Player do
 
   def volume_up(step) do
     min(Paracusia.PlayerState.status().volume + step, max_volume)
-    |> Paracusia.MpdClient.Playback.set_volume()
+    |> set_volume
   end
 
   def volume_down(step) do
     max(Paracusia.PlayerState.status().volume - step, 0)
     |> min(max_volume)
-    |> Paracusia.MpdClient.Playback.set_volume()
+    |> set_volume
   end
 
   def playcount(file) do
@@ -60,9 +64,9 @@ defmodule LohiUi.Player do
     Paracusia.MpdClient.Queue.clear()
     Paracusia.MpdClient.Playback.set_volume(@initial_volume)
 
-    {mod, fun, args} = Application.get_env(:lohi_ui, :load_callback, {IO, :inspect, ["no init fn provided"]})
+    LohiUi.Callbacks.boot()
 
-    {:reply, :ok, apply(mod, fun, args)}
+    {:reply, :ok, state}
   end
 
   def handle_cast({:update, {_action, %Paracusia.PlayerState{} = player_state}}, state) do
@@ -102,4 +106,9 @@ defmodule LohiUi.Player do
   end
 
   def max_volume, do: Application.get_env(:lohi_ui, :max_volume, 100)
+
+  defp set_volume(vol) do
+    LohiUi.Callbacks.volume_change(vol)
+    Paracusia.MpdClient.Playback.set_volume(vol)
+  end
 end

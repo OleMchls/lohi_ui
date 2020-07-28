@@ -41,7 +41,12 @@ defmodule LohiUi.Sync.Trigger do
       "Syning with #{node} completed. #{songs} Songs added. #{playlists} playlists added. Rescanning mpd db now..."
     )
 
+    if playlists > 0 do
+      LohiUi.Callbacks.success()
+    end
+
     LohiUi.Admin.rescan()
+
     Logger.info("Done resyncing mdp database.")
   end
 end

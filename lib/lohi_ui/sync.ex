@@ -20,14 +20,14 @@ defmodule LohiUi.Sync do
   def all_songs(node), do: GenServer.call({__MODULE__, node}, {:list, :music_dir})
 
   def songs_missing_from_node(node) do
-    diff(all_songs, all_songs(node))
+    diff(all_songs(), all_songs(node))
   end
 
-  def all_playlists, do: GenServer.call(__MODULE__, {:list, :playlist_dir})
+  def all_playlists(), do: GenServer.call(__MODULE__, {:list, :playlist_dir})
   def all_playlists(node), do: GenServer.call({__MODULE__, node}, {:list, :playlist_dir})
 
   def playlists_missing_from_node(node) do
-    diff(all_playlists, all_playlists(node))
+    diff(all_playlists(), all_playlists(node))
   end
 
   defp diff(a, b) do
@@ -64,12 +64,18 @@ defmodule LohiUi.Sync do
     opts = [host: String.to_charlist(remote_host)]
 
     Enum.map(missing_songs, fn song ->
-      LohiUi.Sync.Tftp.read_file("#{remote_sync.music_dir}/#{song}", "#{state.music_dir}/#{song}", opts)
+      Task.async(fn ->
+        LohiUi.Sync.Tftp.read_file("#{remote_sync.music_dir}/#{song}", "#{state.music_dir}/#{song}", opts)
+      end)
     end)
+    |> Enum.map(&Task.await(&1, :infinity))
 
     Enum.map(missing_playlists, fn playlist ->
-      LohiUi.Sync.Tftp.read_file("#{remote_sync.playlist_dir}/#{playlist}", "#{state.playlist_dir}/#{playlist}", opts)
+      Task.async(fn ->
+        LohiUi.Sync.Tftp.read_file("#{remote_sync.playlist_dir}/#{playlist}", "#{state.playlist_dir}/#{playlist}", opts)
+      end)
     end)
+    |> Enum.map(&Task.await(&1, :infinity))
 
     {:reply, {:ok, songs: length(missing_songs), playlists: length(missing_playlists)}, state}
   end
