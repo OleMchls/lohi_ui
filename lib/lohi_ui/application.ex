@@ -13,6 +13,12 @@ defmodule LohiUi.Application do
       LohiUiWeb.Endpoint,
       LohiUi.Player,
       LohiUi.MpdMonitor,
+      LohiUi.Sync.Tftp,
+      {LohiUi.Sync,
+       [
+         music_dir: Application.get_env(:lohi_ui, :music_directory),
+         playlist_dir: Application.get_env(:lohi_ui, :playlist_directory)
+       ]},
       # Starts a worker by calling: LohiUi.Worker.start_link(arg)
       # {LohiUi.Worker, arg},
       {Cluster.Supervisor, [Application.get_env(:libcluster, :topologies), [name: LohiUi.ClusterSupervisor]]}
