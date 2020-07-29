@@ -6,6 +6,9 @@ defmodule LohiUi.Application do
   use Application
 
   def start(_type, _args) do
+    music_dir = Application.get_env(:lohi_ui, :music_directory)
+    playlist_directory = Application.get_env(:lohi_ui, :playlist_directory)
+
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
@@ -14,11 +17,8 @@ defmodule LohiUi.Application do
       LohiUi.Player,
       LohiUi.MpdMonitor,
       LohiUi.Sync.Tftp,
-      {LohiUi.Sync,
-       [
-         music_dir: Application.get_env(:lohi_ui, :music_directory),
-         playlist_dir: Application.get_env(:lohi_ui, :playlist_directory)
-       ]},
+      LohiUi.Sync,
+      {LohiUi.Sync.Directory, [music_dir: music_dir, playlist_dir: playlist_directory]},
       LohiUi.Sync.Trigger,
       # Starts a worker by calling: LohiUi.Worker.start_link(arg)
       # {LohiUi.Worker, arg},
