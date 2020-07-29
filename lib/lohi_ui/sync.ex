@@ -38,9 +38,6 @@ defmodule LohiUi.Sync do
 
   @impl true
   def handle_call({:sync, remote_node}, _from, state) do
-    remote_sync = GenServer.call({__MODULE__, remote_node}, :info)
-    [_remote_node_name, remote_host] = Atom.to_string(remote_node) |> String.split("@")
-
     remote_song_dir = songs_dir(remote_node)
     local_song_dir = songs_dir(node())
 
@@ -50,6 +47,7 @@ defmodule LohiUi.Sync do
     missing_songs = songs_missing_from_node(remote_node)
     missing_playlists = playlists_missing_from_node(remote_node)
 
+    [_remote_node_name, remote_host] = Atom.to_string(remote_node) |> String.split("@")
     tftp_opts = [host: String.to_charlist(remote_host)]
 
     Enum.map(missing_songs, fn song ->
