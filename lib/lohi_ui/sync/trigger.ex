@@ -12,7 +12,7 @@ defmodule LohiUi.Sync.Trigger do
 
   @impl true
   def init(opts) do
-    schedule_sync()
+    schedule_sync(@interval)
     {:ok, opts}
   end
 
