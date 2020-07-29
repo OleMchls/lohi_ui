@@ -5,10 +5,12 @@ But without cassette and recording, but with loads of fun for big and small kids
 
 If you have not seen the main project repository [Lohi](https://github.com/OleMchls/lohi) make sure to visit that repo first to familiarize yourself with the idea of the project: https://github.com/OleMchls/lohi.
 
-## Start in cluster mode
+## Participate in cluster
 
 ```
-iex --name ole@192.168.178.61 --cookie looniebox_cookie -S mix
+iex --cookie looniebox_cookie -S mix
+iex(1)> {:ok, hostname} = :inet.gethostname()
+iex(2)> Node.start(:"nerves@#{hostname}.")
 ```
 
 ## Getting Started
