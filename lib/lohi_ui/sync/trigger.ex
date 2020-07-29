@@ -22,33 +22,30 @@ defmodule LohiUi.Sync.Trigger do
 
   @impl true
   def handle_cast(:trigger, state) do
-    sync()
+    schedule_sync(0)
     {:noreply, state}
   end
 
   @impl true
   def handle_info(:sync, state) do
-    sync()
-    schedule_sync()
+    Node.list()
+    |> Enum.map(&sync_node/1)
+
+    schedule_sync(@interval)
     {:noreply, state}
   end
 
-  defp schedule_sync do
-    Process.send_after(self(), :sync, @interval)
-  end
-
-  defp sync() do
-    Node.list()
-    |> Enum.map(&sync_node/1)
+  defp schedule_sync(interval) do
+    Process.send_after(self(), :sync, interval)
   end
 
   defp sync_node(node) do
     Logger.info("Starting sycing with #{node}")
     {:ok, songs: songs, playlists: playlists} = LohiUi.Sync.sync(node)
 
-    Logger.info(
-      "Syning with #{node} completed. #{songs} Songs added. #{playlists} playlists added. Rescanning mpd db now..."
-    )
+    Logger.info("Syning with #{node} completed.")
+    Logger.info("#{songs} Songs added. #{playlists} playlists added.")
+    Logger.info("Rescanning mpd db now...")
 
     if playlists > 0 do
       LohiUi.Callbacks.success()
