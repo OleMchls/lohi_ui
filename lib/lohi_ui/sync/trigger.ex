@@ -3,8 +3,8 @@ require Logger
 defmodule LohiUi.Sync.Trigger do
   use GenServer
 
-  # 10 minutes
-  @interval 600_000
+  # 2 minutes
+  @interval 120_000
 
   def start_link(default) do
     GenServer.start_link(__MODULE__, default, name: __MODULE__)
@@ -12,25 +12,34 @@ defmodule LohiUi.Sync.Trigger do
 
   @impl true
   def init(opts) do
-    schedule_trigger()
+    schedule_sync()
     {:ok, opts}
   end
 
-  def trigger do
+  def trigger_sync do
     GenServer.cast(__MODULE__, :trigger)
   end
 
   @impl true
   def handle_cast(:trigger, state) do
-    Node.list()
-    |> Enum.map(&sync_node/1)
-
-    schedule_trigger()
+    sync()
     {:noreply, state}
   end
 
-  defp schedule_trigger do
-    Process.send_after(self(), :trigger, @interval)
+  @impl true
+  def handle_info(:sync, state) do
+    sync()
+    schedule_sync()
+    {:noreply, state}
+  end
+
+  defp schedule_sync do
+    Process.send_after(self(), :sync, @interval)
+  end
+
+  defp sync() do
+    Node.list()
+    |> Enum.map(&sync_node/1)
   end
 
   defp sync_node(node) do
